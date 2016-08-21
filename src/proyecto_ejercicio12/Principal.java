@@ -5,6 +5,8 @@
  */
 package proyecto_ejercicio12;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author GABRIEL
@@ -62,19 +64,40 @@ public class Principal extends javax.swing.JFrame {
                 txtNDaysActionPerformed(evt);
             }
         });
+        txtNDays.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNDaysKeyTyped(evt);
+            }
+        });
         jPanel1.add(txtNDays, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 115, 90, 30));
 
         cmdBorrar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cmdBorrar.setText("Borrar");
+        cmdBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdBorrarActionPerformed(evt);
+            }
+        });
         jPanel1.add(cmdBorrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 230, 90, 30));
 
         cmdCalcular.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cmdCalcular.setText("Calcular");
+        cmdCalcular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdCalcularActionPerformed(evt);
+            }
+        });
         jPanel1.add(cmdCalcular, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 180, 90, 30));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jLabel4.setText("Monto a pagar:");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, -1, -1));
+
+        txtNPeliculas.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNPeliculasKeyTyped(evt);
+            }
+        });
         jPanel1.add(txtNPeliculas, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 65, 90, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -94,6 +117,67 @@ public class Principal extends javax.swing.JFrame {
     private void txtNDaysActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNDaysActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNDaysActionPerformed
+
+    private void cmdBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdBorrarActionPerformed
+        // TODO add your handling code here:
+        txtNPeliculas.setText("");
+        txtNDays.setText("");
+        txtMonto.setText("");
+        txtNPeliculas.requestFocusInWindow();
+    }//GEN-LAST:event_cmdBorrarActionPerformed
+
+    private void cmdCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdCalcularActionPerformed
+        // TODO add your handling code here:
+        if (txtNPeliculas.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Digite el número de películas", "ERROR", JOptionPane.ERROR_MESSAGE);
+            txtNPeliculas.requestFocusInWindow();
+        }
+        else if (txtNDays.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Digite el número de días de alquiler", "ERROR", JOptionPane.ERROR_MESSAGE);
+            txtNDays.requestFocusInWindow();
+        }
+        else if (txtNPeliculas.getText().equals(".")) {
+            JOptionPane.showMessageDialog(this, "No puede operar puntos", "ERROR", JOptionPane.ERROR_MESSAGE);
+            txtNPeliculas.setText("");
+            txtNPeliculas.requestFocusInWindow();
+        }
+        else if (txtNDays.getText().equals(".")) {
+            JOptionPane.showMessageDialog(this, "No puede operar puntos", "ERROR", JOptionPane.ERROR_MESSAGE);
+            txtNDays.setText("");
+            txtNDays.requestFocusInWindow();
+        }
+        else if (Integer.parseInt(txtNPeliculas.getText()) == 0 || Integer.parseInt(txtNDays.getText()) == 0) {
+            JOptionPane.showMessageDialog(this, "Debe haber películas y días", "ERROR", JOptionPane.ERROR_MESSAGE);
+            txtNPeliculas.setText("");
+            txtNDays.setText("");
+            txtNPeliculas.requestFocusInWindow();
+        }
+        else {
+            int nMovies, nDays, total;
+            nMovies = Integer.parseInt(txtNPeliculas.getText());
+            nDays = Integer.parseInt(txtNDays.getText());
+            total = (nMovies - 1) * nDays * 1500;
+            txtMonto.setText(""+total);
+        }
+    }//GEN-LAST:event_cmdCalcularActionPerformed
+
+    private void txtNPeliculasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNPeliculasKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c)) {
+            getToolkit().beep();
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNPeliculasKeyTyped
+
+    private void txtNDaysKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNDaysKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c)) {
+            getToolkit().beep();
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNDaysKeyTyped
 
     /**
      * @param args the command line arguments
